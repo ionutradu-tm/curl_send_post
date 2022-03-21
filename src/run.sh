@@ -18,7 +18,7 @@ while IFS='=' read -r name value ; do
 done < <(env)
 $CASEMATCH
 
-RESPONSE_CODE=$(curl  --write-out %{http_code} --silent --output /tmp/respose.json -X POST --data "$PAYLOAD" ${URL} )
+RESPONSE_CODE=$(curl  --write-out %{http_code} --silent --output /tmp/respose.json -X POST -H "Content-Type: application/json" --data "$PAYLOAD" ${URL} )
 if [[ $RESPONSE_CODE != 200 ]];then
         echo "Error sending data to the pipeline API"      
 fi
