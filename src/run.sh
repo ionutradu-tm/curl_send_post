@@ -22,5 +22,7 @@ RESPONSE_CODE=$(curl  --write-out %{http_code} --silent --output /tmp/respose.js
 if [[ $RESPONSE_CODE != 200 ]];then
         echo "Error sending data to the pipeline API"      
 fi
-cat /tmp/respose.json
+if [ -f /tmp/respose.json ]; then
+    cat /tmp/respose.json
+fi
   
