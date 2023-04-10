@@ -1,5 +1,7 @@
 #!/bin/bash
 
+MAX_TIMEOUT=${MAX_TIMEOUT:-30}
+
 if [[ -z ${URL} ]]; then
     echo "You must provide an URL"
     exit 1
@@ -18,7 +20,7 @@ while IFS='=' read -r name value ; do
 done < <(env)
 $CASEMATCH
 
-RESPONSE_CODE=$(curl --max-time 30 --write-out %{http_code} --silent --output /tmp/respose.json -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" --data "$PAYLOAD" ${URL} )
+RESPONSE_CODE=$(curl --max-time ${MAX_TIMEOUT} --write-out %{http_code} --silent --output /tmp/respose.json -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $TOKEN" --data "$PAYLOAD" ${URL} )
 if [[ $RESPONSE_CODE != 200 ]];then
         echo "Error sending data to the pipeline API"      
 fi
